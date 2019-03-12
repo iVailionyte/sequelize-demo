@@ -39,6 +39,8 @@ app.get('/api/users', (req, res) => {
 })
 
 // create a blog post
+// create necessary tags, then check if a user who wants to create blog exists in database
+// blog and tags are created, model from the database is loaded
 app.post('/api/blogs', (req, res) => {
     const body = req.body
     // either find a tag with name or create a new one
@@ -50,4 +52,18 @@ app.post('/api/blogs', (req, res) => {
         .then(blog => Blog.findOne({ where: {id: blog.id}, include: [User, Tag]}))
         .then(blogWithAssociations => res.json(blogWithAssociations))
         .catch(err => res.status(400).json({ err: `User with id = [${body.userId}] doesn\'t exist.`}))
+})
+
+// find blogs belonging to one user or all blogs
+app.get('/api/blogs/:userId?', (req, res) => {
+    let query;
+    if(req.params.userId) {
+        query = Blog.findAll({ include: [
+            { model: User, where: { id: req.params.userId } },
+            { model: Tag }
+        ]})
+    } else {
+        query = Blog.findAll({ include: [Tag, User]})
+    }
+    return query.then(blogs => res.json(blogs))
 })
