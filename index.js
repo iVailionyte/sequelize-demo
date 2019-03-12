@@ -67,3 +67,13 @@ app.get('/api/blogs/:userId?', (req, res) => {
     }
     return query.then(blogs => res.json(blogs))
 })
+
+// query blogs by tag
+app.get('/api/blogs/:tag/tag', (req, res) => {
+    Blog.findAll({
+        include: [
+            { model: Tag, where: { name: req.params.tag } }
+        ]
+    })
+    .then(blogs => res.json(blogs))
+})
