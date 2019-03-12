@@ -1,3 +1,5 @@
+// 2 things need to be passed to model
+// The instance of Sequelize and Sequelize itself
 module.exports = (sequelize, type) => {
     return sequelize.define('blog', {
         id: {
