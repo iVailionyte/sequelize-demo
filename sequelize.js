@@ -18,7 +18,7 @@ const User = UserModel(sequelize, Sequelize);
 // BlogTag will be our way of tracking relationship between Blog and Tag models
 // each Blog can have multiple tags and each Tag can have multiple blogs
 // BlogTag holds connections between blogs and tags. Many to many relation. Table with only fields blogID and tagID
-// BlogTag is an empty model that will be used as a throught property
+// BlogTag is an empty model that will be used as a through property
 const BlogTag = sequelize.define('blog_tag', {});
 const Blog = BlogModel(sequelize, Sequelize);
 const Tag = TagModel(sequelize, Sequelize);
